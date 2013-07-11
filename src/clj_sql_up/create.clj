@@ -1,5 +1,4 @@
-(ns leiningen.create
-  (:require [clojure.java.jdbc :as sql]))
+(ns clj-sql-up.create)
 
 (defn migration-text [path]
   (str ";; " path "\n\n"
@@ -11,7 +10,6 @@
 (defn migration-path [name]
   (let [date (-> (java.text.SimpleDateFormat. "yyyyMMddHHmmssSSS")
                  (.format (java.util.Date.)))]
-    (println name)
     (str "migrations/" date "-" name ".clj")))
 
 (defn create-migration-dir []
