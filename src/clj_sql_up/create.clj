@@ -18,6 +18,7 @@
 (defn create-migration-file [name]
   (create-migration-dir)
   (let [path (migration-path name)]
+    (println (str "Creating file: " path))
     (spit path (migration-text path))))
 
 (defn create [args]
