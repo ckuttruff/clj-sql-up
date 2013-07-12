@@ -8,9 +8,9 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 
 ## Install
 In your project.clj file:
-* Put `[clj-sql-up "0.1.0]` into the `:plugins` vector 
+* Put `[clj-sql-up "0.1.0"]` into the `:plugins` vector 
 * Add database connection info (both your driver and jdbc connection string):
-```clojure
+```
 :clj-sql-up {:database "jdbc:postgresql://localhost:5432/foo?foo"
              :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
 ```
@@ -21,7 +21,7 @@ Basic usage (though it doesn't get much more complicated):
     $ lein clj-sql-up create create-posts
 
 ```clojure
-;; 20130712101745082-create-posts.clj
+;; migrations/20130712101745082-create-posts.clj
 (defn up []
   ["CREATE TABLE foo(id int)"
    "CREATE INDEX foo_index ON foo(id)"])
@@ -29,6 +29,7 @@ Basic usage (though it doesn't get much more complicated):
 (defn down []
   ["drop table foo"])
 ```
+### TODO
 	$ lein clj-sql-up migrate
     $ lein clj-sql-up rollback 2
 
