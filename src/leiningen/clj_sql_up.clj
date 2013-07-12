@@ -7,4 +7,5 @@
   [project command & args]
   (cond
    (= command "create")  (create/create args)
-   (= command "migrate") (migrate/migrate (-> project :clj-sql-up :database))))
+   (= command "migrate") (migrate/migrate project
+                                          (-> project :clj-sql-up :database))))
