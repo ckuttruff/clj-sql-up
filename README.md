@@ -1,19 +1,19 @@
 # clj-sql-up
 A Leiningen plugin to manage SQL database migrations simply and dynamically with clojure/jdbc.
 
-## Notable features
+## Features
 * Database agnostic (migrations are created from sequences of sql strings)
 * Supports creation of stored procedures / other complicated sql statements
-* Runs within clojure so sql strings can be dynamically generated
+* Runs within clojure so sql strings can easily be dynamically constructed
+* Has a simple `create` command for generating migration files
 
 ## Install
 In your project.clj file:
 * Put `[clj-sql-up "0.1.0"]` into the `:plugins` vector 
 * Add database connection info (both your driver and jdbc connection string):
-```
-:clj-sql-up {:database "jdbc:postgresql://localhost:5432/foo?foo"
-             :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
-```
+
+    :clj-sql-up {:database "jdbc:postgresql://localhost:5432/foo?foo"
+                 :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
 
 ## Usage
 Basic usage (though it doesn't get much more complicated):
@@ -22,6 +22,7 @@ Basic usage (though it doesn't get much more complicated):
 
 ```clojure
 ;; migrations/20130712101745082-create-posts.clj
+
 (defn up []
   ["CREATE TABLE foo(id int)"
    "CREATE INDEX foo_index ON foo(id)"])

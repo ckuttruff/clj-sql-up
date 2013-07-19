@@ -8,20 +8,20 @@
        "  [])\n"))
 
 (defn migration-path [name]
-  (let [date (-> (java.text.SimpleDateFormat. "yyyyMMddHHmmssSSS")
-                 (.format (java.util.Date.)))]
+  (let [date  (.format (java.text.SimpleDateFormat. "yyyyMMddHHmmssSSS")
+                       (java.util.Date.))]
     (str "migrations/" date "-" name ".clj")))
 
-(defn create-migration-dir []
-  (.mkdir (java.io.File. "migrations")))
-
 (defn create-migration-file [name]
-  (create-migration-dir)
   (let [path (migration-path name)]
     (println (str "Creating file: " path))
     (spit path (migration-text path))))
 
+(defn create-migration-dir []
+  (.mkdir (java.io.File. "migrations")))
+
 (defn create [args]
+  (create-migration-dir)
   (let [name (first args)]
     (create-migration-file name)))
 
