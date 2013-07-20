@@ -15,16 +15,20 @@
   (sort (set/difference (set (files/get-migration-files))
                         (set (completed-migrations db)))))
 
-(defn run-migrations [db migrations]
-  (doseq [m migrations]
-    (load-file (str "migrations/" m))
+(defn run-migrations [db migration-files direction]
+  (doseq [file migration-files]
+    (load-file (str "migrations/" file))
     ;; TODO: actually implement code to run these migrations :)
-    (println ((resolve 'up)))
-    (println ((resolve 'down)))
-    
-    )
-  )
+    (let [sql-arr ((resolve direction))]
+      (println sql-arr)
+      ;;(sql/db-do-commands db sql-arr)
+      ;; (sql/insert! db :clj_sql_migrations {:name  (files/migration-id file)})
+      )))
 
 (defn migrate [db]
   (create-migrations-tbl db)
-  (run-migrations db (pending-migrations db)))
+  (run-migrations db (pending-migrations db) 'up))
+
+(defn rollback [db]
+  (create-migrations-tbl db)
+  (run-migrations db (completed-migrations db) 'down))

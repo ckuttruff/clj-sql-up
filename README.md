@@ -14,8 +14,10 @@ Put `[clj-sql-up "0.1.0"]` into the `:plugins` vector
 
 Add database connection info (both your driver and jdbc connection string):
 
-    :clj-sql-up {:database "jdbc:postgresql://localhost:5432/foo?foo"
-                 :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
+```clojure
+:clj-sql-up {:database "jdbc:postgresql://localhost:5432/foo?foo"
+             :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
+```		 
 
 ## Usage
 Basic usage (though it doesn't get much more complicated):

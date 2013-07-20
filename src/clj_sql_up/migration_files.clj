@@ -3,6 +3,9 @@
             ;;[clojure.java.jdbc :as sql]
             [clojure.string :as str]))
 
+(defn migration-id [migr-filename]
+  (last (re-find #"^([0-9]+)-" migr-filename)))
+
 (defn- migration-file? [filename]
   (re-find #"([0-9]+)-.*\.clj$" filename))
 
