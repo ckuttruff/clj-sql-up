@@ -11,6 +11,7 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 In your project.clj file:
 
 Put `[clj-sql-up "0.1.0"]` into the `:plugins` vector 
+
 Add database connection info (both your driver and jdbc connection string):
 
     :clj-sql-up {:database "jdbc:postgresql://localhost:5432/foo?foo"
