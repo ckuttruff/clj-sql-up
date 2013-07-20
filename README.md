@@ -37,8 +37,13 @@ Basic usage (though it doesn't get much more complicated):
   ["drop table foo"])
 ```
 	$ lein clj-sql-up migrate
-### TODO	
-    $ lein clj-sql-up rollback 2
+	$ lein clj-sql-up rollback  # TODO
+
+## TODO	
+* Implementing rollback functionality
+* Much more testing
+* Making certain aspects more generic (specifying migrations dir, etc.)
+* Ensuring compatibility with the databases that jdbc supports
 
 ## Motivation
 This library was inspired by weavejester's [ragtime](https://github.com/weavejester/ragtime/) library (and uses a few code snippets from that project).  The motivation for starting a new project was to make things a bit more in line structurally with other well-known migration tools and easily allow for creation of more complicated sql commands (eg: stored procedures/functions).  Also was a great opportunity to learn about leiningen plugins :)
