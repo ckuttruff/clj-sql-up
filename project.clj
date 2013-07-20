@@ -3,5 +3,5 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/java.jdbc "0.3.0-alpha4"]]
+                 [org.clojure/java.jdbc "0.2.3"]]
   :eval-in-leiningen true)

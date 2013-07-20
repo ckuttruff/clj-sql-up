@@ -34,8 +34,8 @@ Basic usage (though it doesn't get much more complicated):
 (defn down []
   ["drop table foo"])
 ```
-### TODO
 	$ lein clj-sql-up migrate
+### TODO	
     $ lein clj-sql-up rollback 2
 
 ## Motivation
