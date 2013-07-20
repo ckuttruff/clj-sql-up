@@ -15,5 +15,6 @@ rollback [n]     Rollback n migrations (defaults to 1)"
   (let [opts (:clj-sql-up project)]
     (pome/add-dependencies :coordinates (:deps opts))
     (cond
-     (= command "create")  (create/create args)
-     (= command "migrate") (migrate/migrate (:database opts)))))
+     (= command "create")   (create/create args)
+     (= command "migrate")  (migrate/migrate  (:database opts))
+     (= command "rollback") (migrate/rollback (:database opts)))))

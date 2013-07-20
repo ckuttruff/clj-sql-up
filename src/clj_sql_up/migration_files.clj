@@ -17,3 +17,10 @@
                    (map #(.getName %))
                    (filter migration-file?)
                    sort)))
+
+(defn migration-filename [migr-id migr-files]
+  "Returns the filename associated with the given migration id"
+  [migr-id migr-files]
+  (->> migr-files
+       (filter #(re-find (re-pattern (str migr-id ".*")) %))
+       (first)))

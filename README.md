@@ -7,7 +7,7 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 * Runs within clojure so sql strings can easily be dynamically constructed
 * Has a simple `create` command for generating migration files
 
-## Install
+## Installation
 In your project.clj file:
 
 Put `[clj-sql-up "0.1.0"]` into the `:plugins` vector 
@@ -37,13 +37,16 @@ Basic usage (though it doesn't get much more complicated):
   ["drop table foo"])
 ```
 	$ lein clj-sql-up migrate
-	$ lein clj-sql-up rollback  # TODO
+	Migrating: 20130714150634587-create-timestamps-fn.clj
+	Migrating: 20130714150641624-create-posts.clj
+	$ lein clj-sql-up rollback
+	Reversing: 20130714150641624-create-posts.clj	
 
 ## TODO	
-* Implementing rollback functionality
-* Much more testing
-* Making certain aspects more generic (specifying migrations dir, etc.)
-* Ensuring compatibility with the databases that jdbc supports
+* Write more tests
+* Clean up some of the general structure / duplication in migrate.clj
+* Make certain aspects more generic (specifying migrations dir, etc.)
+* Ensure compatibility with jdbc-supported databases
 
 ## Motivation
 This library was inspired by weavejester's [ragtime](https://github.com/weavejester/ragtime/) library (and uses a few code snippets from that project).  The motivation for starting a new project was to make things a bit more in line structurally with other well-known migration tools and easily allow for creation of more complicated sql commands (eg: stored procedures/functions).  Also was a great opportunity to learn about leiningen plugins :)

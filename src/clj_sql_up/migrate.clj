@@ -3,6 +3,9 @@
             [clojure.java.jdbc :as sql]
             [clj-sql-up.migration-files :as files]))
 
+(def migration-files
+  (files/get-migration-files))
+
 (defn create-migrations-tbl [db]
   (sql/with-connection db
     (sql/do-commands "CREATE TABLE IF NOT EXISTS
@@ -11,20 +14,28 @@
 (defn completed-migrations [db]
   (sql/with-connection db
     (sql/with-query-results names
-      ["SELECT name FROM clj_sql_migrations"]
-      (map :name names))))
+      ["SELECT name FROM clj_sql_migrations ORDER BY name DESC"]
+      (->> names
+           (map #(files/migration-filename
+                  (:name %) migration-files))
+           vec))))
 
 (defn pending-migrations [db]
-  (sort (set/difference (set (files/get-migration-files))
+  (sort (set/difference (set migration-files)
                         (set (completed-migrations db)))))
 
-(defn run-migrations [db migration-files direction]
-  (doseq [file migration-files]
+(defn run-migrations [db files direction]
+  (doseq [file files]
     (load-file (str "migrations/" file))
-    (let [sql-arr ((resolve direction))]
+    (let [sql-arr ((resolve direction))
+          migr-id (files/migration-id file)]
       (sql/with-connection db
         (sql/transaction
-         (sql/insert-rows :clj_sql_migrations [(files/migration-id file)])
+         (if (= direction 'down)
+           (do (println (str "Reversing: " file))
+               (sql/delete-rows :clj_sql_migrations ["name=?" migr-id]))
+           (do (println (str "Migrating: " file))
+               (sql/insert-rows :clj_sql_migrations [migr-id])))
          (doseq [s sql-arr]
            (sql/do-commands s)))))))
 
@@ -34,4 +45,4 @@
 
 (defn rollback [db]
   (create-migrations-tbl db)
-  (run-migrations db (completed-migrations db) 'down))
+  (run-migrations db (take 1 (completed-migrations db)) 'down))
