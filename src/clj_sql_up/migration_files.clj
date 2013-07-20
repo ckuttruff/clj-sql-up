@@ -3,12 +3,14 @@
             ;;[clojure.java.jdbc :as sql]
             [clojure.string :as str]))
 
-(defn- migration-hash [file]
-  (if-let [arr (re-find #"([0-9]+)-.*\.clj$"
-                        (.getName (io/file file)))]
-    {(last arr) (first arr)}))
+(defn- migration-file? [filename]
+  (re-find #"([0-9]+)-.*\.clj$" filename))
 
-(defn get-migration-files []
-  (map migration-hash (.listFiles (io/file "migrations"))))
-
-;;  { "20130714150641624" "20130714150641624-create-posts.clj" }
+;; TODO: find a way to set migration dir dynamically
+(defn get-migration-files 
+  ([] (get-migration-files "migrations"))
+  ([dir-name] (->> (io/file dir-name)
+                   (.listFiles)
+                   (map #(.getName %))
+                   (filter migration-file?)
+                   sort)))
