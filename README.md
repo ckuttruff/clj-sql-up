@@ -27,6 +27,8 @@ Basic usage (though it doesn't get much more complicated):
 ```clojure
 ;; migrations/20130712101745082-create-posts.clj
 
+;; Note: the generated methods would just return a blank vector
+;;       Just inserting some statements as an example
 (defn up []
   ["CREATE TABLE foo(id int)"
    "CREATE INDEX foo_index ON foo(id)"])
