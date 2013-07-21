@@ -9,7 +9,7 @@
 Commands:
 create name      Create migration (eg: migrations/20130712101745082-<name>.clj)
 migrate          Run all pending migrations
-rollback [n]     Rollback n migrations (defaults to 1)"
+rollback         Rollback last migration"
   [project command & args]
 
   (let [opts (:clj-sql-up project)]
