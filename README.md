@@ -10,13 +10,22 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 ## Installation
 In your project.clj file:
 
-Put `[clj-sql-up "0.1.0"]` into the `:plugins` vector 
+Put clj-sql-up into your plugins vector:
+```clojure
+:plugins [[clj-sql-up "0.1.0"]]
+```
 
 Add database connection info (both your driver and jdbc connection string):
 
 ```clojure
 :clj-sql-up {:database "jdbc:postgresql://localhost:5432/foo?foo"
              :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
+;; OR			 
+:clj-sql-up {:database {:subprotocol "mysql"
+                        :subname "//localhost:3306/foo"
+                        :user "foo"
+                        :password ""}
+             :deps [[mysql/mysql-connector-java "5.1.6"]]}
 ```		 
 
 ## Usage
@@ -43,6 +52,7 @@ Basic usage (though it doesn't get much more complicated):
 	Reversing: 20130714150641624-create-posts.clj	
 
 ## TODO	
+* Add an environment flag to support mult. databases (for testing, etc)
 * Write more tests
 * Clean up some of the general structure / duplication in migrate.clj
 * Make certain aspects more generic (specifying migrations dir, etc.)
