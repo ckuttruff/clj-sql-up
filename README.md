@@ -8,7 +8,7 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 * Has a simple `create` command for generating migration files
 
 ## Installation
-### In your project.clj file:
+#### In your project.clj file:
 
 Put clj-sql-up into your plugins vector:
 ```clojure
