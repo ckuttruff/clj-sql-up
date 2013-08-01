@@ -8,7 +8,7 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 * Has a simple `create` command for generating migration files
 
 ## Installation
-In your project.clj file:
+### In your project.clj file:
 
 Put clj-sql-up into your plugins vector:
 ```clojure
@@ -34,7 +34,7 @@ Basic usage (though it doesn't get much more complicated):
     $ lein clj-sql-up create create-posts
 
 ```clojure
-;; migrations/20130712101745082-create-posts.clj
+;; migrations/20130714150641624-create-posts.clj
 
 ;; Note: the generated methods would just return a blank vector
 ;;       Just inserting some statements as an example
