@@ -18,15 +18,15 @@ Put clj-sql-up into your plugins vector:
 Add database connection info (both your driver and jdbc connection string):
 
 ```clojure
-:clj-sql-up {:database "jdbc:postgresql://localhost:5432/foo?foo"
+:clj-sql-up {:database "jdbc:postgresql://127.0.0.1:5432/foo?foo"
              :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
-;; OR			 
+;; OR
 :clj-sql-up {:database {:subprotocol "mysql"
-                        :subname "//localhost:3306/foo"
+                        :subname "//127.0.0.1:3306/foo"
                         :user "foo"
                         :password ""}
              :deps [[mysql/mysql-connector-java "5.1.6"]]}
-```		 
+```
 
 ## Usage
 Basic usage (though it doesn't get much more complicated):
@@ -49,9 +49,9 @@ Basic usage (though it doesn't get much more complicated):
 	Migrating: 20130714150634587-create-timestamps-fn.clj
 	Migrating: 20130714150641624-create-posts.clj
 	$ lein clj-sql-up rollback
-	Reversing: 20130714150641624-create-posts.clj	
+	Reversing: 20130714150641624-create-posts.clj
 
-## TODO	
+## TODO
 * Add an environment flag to support mult. databases (for testing, etc)
 * Write more tests
 * Clean up some of the general structure / duplication in migrate.clj

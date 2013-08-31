@@ -1,6 +1,5 @@
 (ns clj-sql-up.migration-files
   (:require [clojure.java.io :as io]
-            ;;[clojure.java.jdbc :as sql]
             [clojure.string :as str]))
 
 (defn migration-id [migr-filename]
