@@ -4,6 +4,7 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 ## Features
 * Database agnostic (migrations are created from sequences of sql strings)
 * Supports creation of stored procedures / other complicated sql statements
+* Supports running migrations under multiple environments with "ENV" environment variable
 * Runs within clojure so sql strings can easily be dynamically constructed
 * Has a simple `create` command for generating migration files
 
@@ -55,8 +56,15 @@ Basic usage (though it doesn't get much more complicated):
 	$ lein clj-sql-up rollback
 	Reversing: 20130714150641624-create-posts.clj
 
+### Multiple environments
+To run migrations on a different database, ensure you define the connection in your project.clj file (see examples above)
+and run:
+	$ ENV=test lein clj-sql-up migrate
+	$ ENV=test lein clj-sql-up rollback
+
+And this will run the migration on the database specfied by :database-test in your config section
+
 ## TODO
-* Add an environment flag to support mult. databases (for testing, etc)
 * Write more tests
 * Clean up some of the general structure / duplication in migrate.clj
 * Make certain aspects more generic (specifying migrations dir, etc.)
