@@ -59,6 +59,7 @@ Basic usage (though it doesn't get much more complicated):
 ### Multiple environments
 To run migrations on a different database, ensure you define the connection in your project.clj file (see examples above)
 and run:
+
 	$ ENV=test lein clj-sql-up migrate
 	$ ENV=test lein clj-sql-up rollback
 
