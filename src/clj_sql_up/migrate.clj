@@ -43,6 +43,7 @@
   (create-migrations-tbl db)
   (run-migrations db (pending-migrations db) 'up))
 
-(defn rollback [db]
+(defn rollback [db n]
   (create-migrations-tbl db)
-  (run-migrations db (take 1 (completed-migrations db)) 'down))
+  (let [n (Long. (or n 1))]
+    (run-migrations db (take n (completed-migrations db)) 'down)))
