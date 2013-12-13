@@ -1,4 +1,4 @@
-(defproject clj-sql-up "0.2.0"
+(defproject clj-sql-up "0.3.0"
   :description "A simple leiningen plugin for managing sql migrations"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}

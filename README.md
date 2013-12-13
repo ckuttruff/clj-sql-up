@@ -13,7 +13,7 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 
 Put clj-sql-up into your plugins vector:
 ```clojure
-:plugins [[clj-sql-up "0.2.0"]]
+:plugins [[clj-sql-up "0.3.0"]]
 ```
 
 Add database connection info (both your driver and jdbc connection string):
@@ -27,9 +27,12 @@ Add database connection info (both your driver and jdbc connection string):
                         :user "foo"
                         :password ""}
              :deps [[mysql/mysql-connector-java "5.1.6"]]}
-;; OR (for use with multiple environments)
+;; OR (for use with multiple environments or a custom repo dependency)
 :clj-sql-up {:database-test "jdbc:postgresql://127.0.0.1:5432/foo_test?foo"
-             :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
+             :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]
+	     ;; Note, this is included already in your migrations, but
+	     ;;   is an example of adding additional dependency repos
+	     :repos { "clojars" "http://clojars.org/repo" }}
 
 ```
 
