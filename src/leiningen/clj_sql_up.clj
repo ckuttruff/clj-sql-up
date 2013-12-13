@@ -21,8 +21,12 @@ rollback n       Rollback last n migrations (n defaults to 1)"
   ([project] (println (:doc (meta #'clj-sql-up))))
   ([project command & args]
      (let [opts (:clj-sql-up project)
-           db   (get-database opts)]
-       (pome/add-dependencies :coordinates (:deps opts))
+           db   (get-database opts)
+           repos (merge {"central" "http://repo1.maven.org/maven2/"}
+                        {"clojars" "http://clojars.org/repo"}
+                        (:repos opts))]
+       (pome/add-dependencies :coordinates (:deps opts)
+                              :repositories repos)
        (cond
         (= command "create")   (create/create args)
         (= command "migrate")  (migrate/migrate  db)
