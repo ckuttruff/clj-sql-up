@@ -4,4 +4,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/java.jdbc "0.2.3"]]
+  :url "https://github.com/ckuttruff/clj-sql-up"
   :eval-in-leiningen true)
