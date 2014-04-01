@@ -17,7 +17,7 @@
      (sql/create-table-ddl :clj_sql_migrations [:name "varchar(20)" "NOT NULL"])
      "create unique index clj_sql_migrations_name_index on clj_sql_migrations (name)")))
 
-(defn completed-migrations 
+(defn completed-migrations
   ([db] (completed-migrations db (files/get-migration-files)))
   ([db migration-files]
     (sql/query
@@ -27,9 +27,11 @@
                  (:name %) migration-files))))
 
 
-(defn pending-migrations [db migration-files]
+(defn pending-migrations
+  ([db] (pending-migrations db (files/get-migration-files)))
+  ([db migration-files]
   (sort (set/difference (set migration-files)
-                        (set (completed-migrations db migration-files)))))
+                        (set (completed-migrations db migration-files))))))
 
 (defn run-migrations [db files direction]
   (println direction)
@@ -48,9 +50,9 @@
 
 (defn migrate [db]
   (create-migrations-tbl db)
-  (run-migrations db (pending-migrations db (files/get-migration-files)) 'up))
+  (run-migrations db (pending-migrations db) 'up))
 
 (defn rollback [db n]
   (create-migrations-tbl db)
   (let [n (Long. (or n 1))]
-    (run-migrations db (take n (completed-migrations db (files/get-migration-files))) 'down)))
+    (run-migrations db (take n (completed-migrations db)) 'down)))

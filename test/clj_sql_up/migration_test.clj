@@ -23,6 +23,7 @@
 
        (let [completed-migrations (m/completed-migrations db-spec)]
          (is (= 4 (count completed-migrations)))
+         (is (= 0 (count (m/pending-migrations db-spec))))
          (is (= 0 (count-records db-spec "aaa")))
          (is (= 0 (count-records db-spec "bbb")))
          (is (= 0 (count-records db-spec "ccc")))
@@ -32,6 +33,7 @@
       (m/rollback db-spec 1)
       (let [completed-migrations (m/completed-migrations db-spec)]
         (is (= 3 (count completed-migrations)))
+        (is (= 1 (count (m/pending-migrations db-spec))))
         (is (= 0 (count-records db-spec "bbb")))
         (is (= 0 (count-records db-spec "ccc")))
         (is (= 0 (count-records db-spec "zzz")))
@@ -43,6 +45,7 @@
       (m/rollback db-spec 2)
       (let [completed-migrations (m/completed-migrations db-spec)]
         (is (= 1 (count completed-migrations)))
+        (is (= 3 (count (m/pending-migrations db-spec))))
         (is (= 0 (count-records db-spec "zzz")))
 
         (is (thrown? Exception (count-records db-spec "ccc")))
@@ -54,6 +57,7 @@
 
        (let [completed-migrations (m/completed-migrations db-spec)]
          (is (= 4 (count completed-migrations)))
+         (is (= 0 (count (m/pending-migrations db-spec))))
          (is (= 0 (count-records db-spec "aaa")))
          (is (= 0 (count-records db-spec "bbb")))
          (is (= 0 (count-records db-spec "ccc")))
