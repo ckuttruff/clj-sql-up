@@ -3,41 +3,52 @@
             [clojure.java.jdbc :as sql]
             [clj-sql-up.migration-files :as files]))
 
-(def migration-files
-  (files/get-migration-files))
+(defn- migration-tbl-exists? [db]
+  ; Here we'll use the JDBC connection's API for finding if a table exists, as the
+  ; `create table if exists` isn't quite universally accepted, and querying for a table's
+  ; existence is very DB-specific
+  (let [tables (-> (sql/get-connection db)
+                   .getMetaData
+                   (.getTables nil nil nil nil)
+                   sql/metadata-result)]
+    (not (empty? (filter #(= (.toLowerCase (:table_name %)) "clj_sql_migrations") tables)))))
 
 (defn create-migrations-tbl [db]
-  (sql/with-connection db
-    (sql/do-commands "CREATE TABLE IF NOT EXISTS
-                      clj_sql_migrations(name varchar(20) NOT NULL UNIQUE)")))
+  (if-not (migration-tbl-exists? db)
+    (sql/db-do-commands
+     db
+     (sql/create-table-ddl :clj_sql_migrations [:name "varchar(20)" "NOT NULL"])
+     "create unique index clj_sql_migrations_name_index on clj_sql_migrations (name)")))
 
-(defn completed-migrations [db]
-  (sql/with-connection db
-    (sql/with-query-results names
-      ["SELECT name FROM clj_sql_migrations ORDER BY name DESC"]
-      (->> names
-           (map #(files/migration-filename
-                  (:name %) migration-files))
-           vec))))
+(defn completed-migrations
+  ([db] (completed-migrations db (files/get-migration-files)))
+  ([db migration-files]
+    (sql/query
+     db
+     ["SELECT name FROM clj_sql_migrations ORDER BY name DESC"]
+     :row-fn #(files/migration-filename
+                 (:name %) migration-files))))
 
-(defn pending-migrations [db]
-  (sort (set/difference (set migration-files)
-                        (set (completed-migrations db)))))
+
+(defn pending-migrations
+  [db]
+  (let [migration-files (files/get-migration-files)]
+    (sort (set/difference (set migration-files)
+                          (set (completed-migrations db migration-files))))))
 
 (defn run-migrations [db files direction]
   (doseq [file files]
-    (load-file (str "migrations/" file))
+    (files/load-migration-file file)
     (let [sql-arr ((resolve direction))
           migr-id (files/migration-id file)]
-      (sql/with-connection db
-        (sql/transaction
-         (if (= direction 'down)
-           (do (println (str "Reversing: " file))
-               (sql/delete-rows :clj_sql_migrations ["name=?" migr-id]))
-           (do (println (str "Migrating: " file))
-               (sql/insert-rows :clj_sql_migrations [migr-id])))
-         (doseq [s sql-arr]
-           (sql/do-commands s)))))))
+      (sql/db-transaction* db (fn [trans_db]
+       (if (= direction 'down)
+         (do (println (str "Reversing: " file))
+           (sql/delete! trans_db :clj_sql_migrations ["name=?" migr-id]))
+         (do (println (str "Migrating: " file))
+           (sql/insert! trans_db :clj_sql_migrations {:name migr-id})))
+       (doseq [s sql-arr]
+         (sql/db-do-commands trans_db s)))))))
 
 (defn migrate [db]
   (create-migrations-tbl db)
