@@ -4,6 +4,9 @@
             [clj-sql-up.migration-files :as files]))
 
 (defn- migration-tbl-exists? [db]
+  ; Here we'll use the JDBC connection's API for finding if a table exists, as the
+  ; `create table if exists` isn't quite universally accepted, and querying for a table's
+  ; existence is very DB-specific
   (let [tables (-> (sql/get-connection db)
                    .getMetaData
                    (.getTables nil nil nil nil)
@@ -28,13 +31,12 @@
 
 
 (defn pending-migrations
-  ([db] (pending-migrations db (files/get-migration-files)))
-  ([db migration-files]
-  (sort (set/difference (set migration-files)
-                        (set (completed-migrations db migration-files))))))
+  [db]
+  (let [migration-files (files/get-migration-files)]
+    (sort (set/difference (set migration-files)
+                          (set (completed-migrations db migration-files))))))
 
 (defn run-migrations [db files direction]
-  (println direction)
   (doseq [file files]
     (files/load-migration-file file)
     (let [sql-arr ((resolve direction))

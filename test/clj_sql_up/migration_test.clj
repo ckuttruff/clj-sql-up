@@ -63,11 +63,4 @@
          (is (= 0 (count-records db-spec "ccc")))
          (is (= 0 (count-records db-spec "zzz")))))
 
-
   ))
-
-
-
-
-
-
