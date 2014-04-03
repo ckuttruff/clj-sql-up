@@ -15,10 +15,10 @@
   ([] (get-migration-files DEFAULT_MIGRATION_DIR))
   ([dir-name]
    (->> (io/file dir-name)
-                   (.listFiles)
-                   (map #(.getName %))
-                   (filter migration-file?)
-                   sort)))
+        (.listFiles)
+        (map #(.getName %))
+        (filter migration-file?)
+        sort)))
 
 (defn load-migration-file
   ([file] (load-migration-file DEFAULT_MIGRATION_DIR file))

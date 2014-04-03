@@ -1,5 +1,10 @@
 ## Releases
 
+### 0.3.1
+* jdbc 0.3.3 compatibility
+* more testing
+* make migration table creation more db agnostic
+
 ### 0.3.0
 * Allow for dependency repository injection into migration files (includes clojars and maven central by default)
 

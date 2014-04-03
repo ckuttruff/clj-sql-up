@@ -13,14 +13,14 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 
 Put clj-sql-up into your plugins vector:
 ```clojure
-:plugins [[clj-sql-up "0.3.0"]]
+:plugins [[clj-sql-up "0.3.1"]]
 ```
 
 Add database connection info (both your driver and jdbc connection string):
 
 ```clojure
-:clj-sql-up {:database "jdbc:postgresql://127.0.0.1:5432/foo?foo"
-             :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]}
+:clj-sql-up {:database "jdbc:postgresql://foo@127.0.0.1:5432/foo"
+             :deps [[org.postgresql/postgresql "9.3-1100-jdbc4"]]}
 ;; OR
 :clj-sql-up {:database {:subprotocol "mysql"
                         :subname "//127.0.0.1:3306/foo"
@@ -28,8 +28,8 @@ Add database connection info (both your driver and jdbc connection string):
                         :password ""}
              :deps [[mysql/mysql-connector-java "5.1.6"]]}
 ;; OR (for use with multiple environments or a custom repo dependency)
-:clj-sql-up {:database-test "jdbc:postgresql://127.0.0.1:5432/foo_test?foo"
-             :deps [[org.postgresql/postgresql "9.2-1003-jdbc4"]]
+:clj-sql-up {:database-test "jdbc:postgresql://foo@127.0.0.1:5432/foo_test"
+             :deps [[org.postgresql/postgresql "9.3-1100-jdbc4"]]
 	     ;; Note, this is included already in your migrations, but
 	     ;;   is an example of adding additional dependency repos
 	     :repos { "clojars" "http://clojars.org/repo" }}
@@ -75,7 +75,14 @@ And this will run the migration on the database specfied by :database-test in yo
 * Ensure compatibility with jdbc-supported databases
 
 ## Motivation
-This library was inspired by weavejester's [ragtime](https://github.com/weavejester/ragtime/) library (and uses a few code snippets from that project).  The motivation for starting a new project was to make things a bit more in line structurally with other well-known migration tools and easily allow for creation of more complicated sql commands (eg: stored procedures/functions).  Also was a great opportunity to learn about leiningen plugins :)
+The motivation for starting a new project was to make things a bit more in line structurally with other well-known migration tools and easily allow for creation of more complicated sql commands (eg: stored procedures/functions).  Also was a great opportunity to learn about leiningen plugins :)
+
+## Contributors
+* @peterschwarz
+  * added jdbc 0.3.3 compatibility
+  * created additional tests with hsqldb
+  * ensured db-agnostic migration table creation
+
 
 ## License
 Copyright © 2013 Christopher Kuttruff
