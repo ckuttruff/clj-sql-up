@@ -69,20 +69,17 @@ and run:
 And this will run the migration on the database specfied by :database-test in your config section
 
 ## TODO
-* Write more tests
-* Clean up some of the general structure / duplication in migrate.clj
+* Add more tests
 * Make certain aspects more generic (specifying migrations dir, etc.)
-* Ensure compatibility with jdbc-supported databases
 
 ## Motivation
-The motivation for starting a new project was to make things a bit more in line structurally with other well-known migration tools and easily allow for creation of more complicated sql commands (eg: stored procedures/functions).  Also was a great opportunity to learn about leiningen plugins :)
+The motivation behind clj-sql-up is to create a migration library that is as simple as possible, but allows for migration statements to exist within the context of clojure (not as plain sql files).  It also allows for creation of more complicated sql commands (eg: stored procedures/functions) - something certain clojure migration libraries currently fail to do properly.
 
 ## Contributors
-* @peterschwarz
-  * added jdbc 0.3.3 compatibility
-  * created additional tests with hsqldb
-  * ensured db-agnostic migration table creation
-
+* **[@peterschwarz](https://github.com/peterschwarz)**
+    * added jdbc 0.3.3 compatibility
+    * created additional tests with hsqldb
+    * ensured db-agnostic migration table creation
 
 ## License
 Copyright © 2013 Christopher Kuttruff
