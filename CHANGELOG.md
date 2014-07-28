@@ -1,5 +1,8 @@
 ## Releases
 
+### 0.3.2
+* add pomegranate dependency
+
 ### 0.3.1
 * jdbc 0.3.3 compatibility
 * more testing
