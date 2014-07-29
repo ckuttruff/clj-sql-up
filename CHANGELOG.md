@@ -1,5 +1,8 @@
 ## Releases
 
+### 0.3.3
+* fix for issue with (Long.) function in migration rollback
+
 ### 0.3.2
 * add pomegranate dependency
 
