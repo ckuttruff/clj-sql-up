@@ -68,6 +68,11 @@ and run:
 
 And this will run the migration on the database specfied by :database-test in your config section
 
+### Note for heroku users
+Heroku uses leiningen 1.x by default which introduces some dependency conflicts for pomegranate (used by clj-sql-up).  See this issue for more detail: https://github.com/ckuttruff/clj-sql-up/issues/5
+
+Please include the following within your project.clj to use leiningen 2.x in your app: `:min-lein-version "2.0.0"`
+
 ## TODO
 * Add more tests
 * Make certain aspects more generic (specifying migrations dir, etc.)
