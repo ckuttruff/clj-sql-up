@@ -1,5 +1,8 @@
 ## Releases
 
+### 0.3.4
+* Use binding/dynamic variable for migrations directory (rebound in tests, etc)
+
 ### 0.3.3
 * fix for issue with (Long.) function in migration rollback
 

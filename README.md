@@ -13,7 +13,7 @@ A Leiningen plugin to manage SQL database migrations simply and dynamically with
 
 Put clj-sql-up into your plugins vector:
 ```clojure
-:plugins [[clj-sql-up "0.3.3"]]
+:plugins [[clj-sql-up "0.3.4"]]
 ```
 
 Add database connection info (both your driver and jdbc connection string):
@@ -87,6 +87,8 @@ The motivation behind clj-sql-up is to create a migration library that is as sim
     * ensured db-agnostic migration table creation
 * **[@kitallis](https://github.com/kitallis)**
     * Fixed issue with use of java's Long casting
+* **[@adomokos](https://github.com/adomokos)**
+    * Updates to dynamic binding of migrations directory
 
 ## License
 Copyright © 2013 Christopher Kuttruff
