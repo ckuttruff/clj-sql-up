@@ -15,7 +15,7 @@
 
 (deftest test-migrate-and-rollback
 
-  (binding [mf/default-migration-dir "test/clj_sql_up/migrations"]
+  (binding [mf/*default-migration-dir* "test/clj_sql_up/migrations"]
 
     (testing "migrate"
       (m/migrate db-spec)

@@ -2,7 +2,7 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as str]))
 
-(def ^:dynamic default-migration-dir "migrations")
+(def ^:dynamic *default-migration-dir* "migrations")
 
 (defn migration-id [migr-filename]
   (last (re-find #"^([0-9]+)-" migr-filename)))
@@ -12,7 +12,7 @@
 
 ;; TODO: find a way to set migration dir dynamically
 (defn get-migration-files
-  ([] (get-migration-files default-migration-dir))
+  ([] (get-migration-files *default-migration-dir*))
   ([dir-name]
    (->> (io/file dir-name)
         (.listFiles)
@@ -21,7 +21,7 @@
         sort)))
 
 (defn load-migration-file
-  ([file] (load-migration-file default-migration-dir file))
+  ([file] (load-migration-file *default-migration-dir* file))
   ([dir-name file]
    (load-file (str dir-name "/" file))))
 
