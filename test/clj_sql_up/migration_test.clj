@@ -1,7 +1,9 @@
 (ns clj-sql-up.migration-test
   (:require [clojure.test :refer :all]
+            [clj-sql-up.create :as c]
             [clj-sql-up.migrate :as m]
             [clj-sql-up.migration-files :as mf]
+            [clojure.java.io :as io]
             [clojure.java.jdbc :as sql]))
 
 (def db-spec {:subprotocol "hsqldb"
@@ -12,6 +14,23 @@
     (sql/query db-spec [(str "select count(*) from " table-name)])
     first
     :c1))
+
+(defn- delete-recursively [fname]
+  (let [func (fn [func f]
+               (when (.isDirectory f)
+                 (doseq [f2 (.listFiles f)]
+                   (func func f2)))
+               (io/delete-file f))]
+    (func func (io/file fname))))
+
+(deftest test-create-migration
+  (testing "create"
+    (let [dir "test/clj_sql_up/new_migrations"]
+      (try
+        (binding [c/*default-migration-dir* dir]
+          (let [path (c/create ["yo"])]
+            (.exists (io/as-file path))))
+        (finally (delete-recursively dir))))))
 
 (deftest test-migrate-and-rollback
 

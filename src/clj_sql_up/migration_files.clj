@@ -10,7 +10,6 @@
 (defn- migration-file? [filename]
   (re-find #"([0-9]+)-.*\.clj$" filename))
 
-;; TODO: find a way to set migration dir dynamically
 (defn get-migration-files
   ([] (get-migration-files *default-migration-dir*))
   ([dir-name]
