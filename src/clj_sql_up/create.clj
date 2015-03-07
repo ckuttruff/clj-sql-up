@@ -1,6 +1,5 @@
-(ns clj-sql-up.create)
-
-(def ^:dynamic *default-migration-dir* "migrations")
+(ns clj-sql-up.create
+  (:require [clj-sql-up.migration-files :refer [*default-migration-dir*]]))
 
 (defn migration-text [path]
   (str ";; " path "\n\n"

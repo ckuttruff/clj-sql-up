@@ -15,6 +15,7 @@
     first
     :c1))
 
+;;from https://gist.github.com/edw/5128978
 (defn- delete-recursively [fname]
   (let [func (fn [func f]
                (when (.isDirectory f)
@@ -27,7 +28,7 @@
   (testing "create"
     (let [dir "test/clj_sql_up/new_migrations"]
       (try
-        (binding [c/*default-migration-dir* dir]
+        (binding [mf/*default-migration-dir* dir]
           (let [path (c/create ["yo"])]
             (.exists (io/as-file path))))
         (finally (delete-recursively dir))))))
