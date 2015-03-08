@@ -1,5 +1,5 @@
 (ns clj-sql-up.create
-  (:require [clj-sql-up.migration-files :refer [*default-migration-dir*]]))
+  (:require [clj-sql-up.migration-files :refer [*migration-dir*]]))
 
 (defn migration-text [path]
   (str ";; " path "\n\n"
@@ -11,7 +11,7 @@
 (defn migration-path [name]
   (let [date  (.format (java.text.SimpleDateFormat. "yyyyMMddHHmmssSSS")
                        (java.util.Date.))]
-    (str *default-migration-dir* "/" date "-" name ".clj")))
+    (str *migration-dir* "/" date "-" name ".clj")))
 
 (defn create-migration-file [name]
   (let [path (migration-path name)]
@@ -20,7 +20,7 @@
     path))
 
 (defn create-migration-dir []
-  (.mkdir (java.io.File. *default-migration-dir*)))
+  (.mkdir (java.io.File. *migration-dir*)))
 
 (defn create [args]
   (create-migration-dir)

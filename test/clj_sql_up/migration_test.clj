@@ -28,14 +28,14 @@
   (testing "create"
     (let [dir "test/clj_sql_up/new_migrations"]
       (try
-        (binding [mf/*default-migration-dir* dir]
+        (binding [mf/*migration-dir* dir]
           (let [path (c/create ["yo"])]
             (.exists (io/as-file path))))
         (finally (delete-recursively dir))))))
 
 (deftest test-migrate-and-rollback
 
-  (binding [mf/*default-migration-dir* "test/clj_sql_up/migrations"]
+  (binding [mf/*migration-dir* "test/clj_sql_up/migrations"]
 
     (testing "migrate"
       (m/migrate db-spec)

@@ -1,5 +1,8 @@
 ## Releases
 
+### 0.3.5
+* Allow dynamic binding of \*default-migration-dir\* in create.clj code
+
 ### 0.3.4
 * Use binding/dynamic variable for migrations directory (rebound in tests, etc)
 
