@@ -1,5 +1,8 @@
 ## Releases
 
+### 0.3.6
+* Fix parsing of rollback count
+
 ### 0.3.5
 * Allow dynamic binding of \*default-migration-dir\* in create.clj code
 
