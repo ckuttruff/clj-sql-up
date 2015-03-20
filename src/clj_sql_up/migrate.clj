@@ -56,5 +56,7 @@
 
 (defn rollback [db n]
   (create-migrations-tbl db)
-  (let [n (long (or n 1))]
+  (let [n (if (string? n)
+            (read-string n)
+            (or n 1))]
     (run-migrations db (take n (completed-migrations db)) 'down)))
