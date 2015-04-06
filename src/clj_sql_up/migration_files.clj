@@ -30,15 +30,19 @@
        (map #(.getName %))
        (filter migration-file?)))
 
+(defn- strip-trailing-slashes [a-str]
+  (str/replace a-str #"/+$" ""))
+
 (defn get-migration-files
   ([] (get-migration-files *migration-dir*))
   ([dir-name]
-   (sort
-    (distinct
-     (concat
-      (migration-files-in-dir dir-name)
-      (mapcat migration-files-in-dir (classpath-migration-dirs dir-name))
-      (mapcat (partial migration-files-in-jar dir-name) (cp/classpath-jarfiles)))))))
+   (let [dir-name (strip-trailing-slashes dir-name)]
+    (sort
+     (distinct
+      (concat
+       (migration-files-in-dir dir-name)
+       (mapcat migration-files-in-dir (classpath-migration-dirs dir-name))
+       (mapcat (partial migration-files-in-jar dir-name) (cp/classpath-jarfiles))))))))
 
 (defn load-migration-file
   ([file] (load-migration-file *migration-dir* file))
