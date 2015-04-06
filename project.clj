@@ -4,7 +4,9 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/java.jdbc "0.3.3"]
-                 [com.cemerick/pomegranate "0.3.0"]]
+                 [com.cemerick/pomegranate "0.3.0"]
+                 [org.clojure/java.classpath "0.2.2"]]
   :url "https://github.com/ckuttruff/clj-sql-up"
-  :profiles {:dev {:dependencies [[org.hsqldb/hsqldb "2.3.2"]]}}
+  :profiles {:dev {:dependencies [[org.hsqldb/hsqldb "2.3.2"]]
+                    :test-paths ["test/clj_sql_up/test_jar_migration.jar"]}}
   :eval-in-leiningen true)
