@@ -1,5 +1,9 @@
 ## Releases
 
+### 0.3.7
+* Allow migrations to be loaded from classpath
+* Permit packaging of migrations with a jar/uberjar
+
 ### 0.3.6
 * Fix parsing of rollback count
 
