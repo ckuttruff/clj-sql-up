@@ -83,3 +83,54 @@
         (is (= 0 (count-records db-spec "ccc")))
         (is (= 0 (count-records db-spec "zzz")))))
   ))
+
+
+(deftest test-classpath-migrate-and-rollback
+
+  (binding [mf/*migration-dir* "clj_sql_up/classpath_migrations"]
+
+    (testing "migrate"
+      (m/migrate db-spec)
+
+      (let [completed-migrations (m/completed-migrations db-spec)]
+        (is (= 4 (count completed-migrations)))
+        (is (= 0 (count (m/pending-migrations db-spec))))
+        (is (= 0 (count-records db-spec "aaa")))
+        (is (= 0 (count-records db-spec "bbb")))
+        (is (= 0 (count-records db-spec "ccc")))
+        (is (= 0 (count-records db-spec "zzz")))))
+
+    (testing "rollback: 1"
+      (m/rollback db-spec 1)
+      (let [completed-migrations (m/completed-migrations db-spec)]
+        (is (= 3 (count completed-migrations)))
+        (is (= 1 (count (m/pending-migrations db-spec))))
+        (is (= 0 (count-records db-spec "bbb")))
+        (is (= 0 (count-records db-spec "ccc")))
+        (is (= 0 (count-records db-spec "zzz")))
+
+        (is (thrown? Exception (count-records db-spec "aaa")))))
+
+    (testing "rollback: 2"
+
+      (m/rollback db-spec 2)
+      (let [completed-migrations (m/completed-migrations db-spec)]
+        (is (= 1 (count completed-migrations)))
+        (is (= 3 (count (m/pending-migrations db-spec))))
+        (is (= 0 (count-records db-spec "zzz")))
+
+        (is (thrown? Exception (count-records db-spec "ccc")))
+        (is (thrown? Exception (count-records db-spec "bbb")))
+        (is (thrown? Exception (count-records db-spec "aaa")))))
+
+    (testing "migrate again"
+      (is (= 1 (count (m/completed-migrations db-spec))))
+
+      (m/migrate db-spec)
+      (let [completed-migrations (m/completed-migrations db-spec)]
+        (is (= 4 (count completed-migrations)))
+        (is (= 0 (count (m/pending-migrations db-spec))))
+        (is (= 0 (count-records db-spec "aaa")))
+        (is (= 0 (count-records db-spec "bbb")))
+        (is (= 0 (count-records db-spec "ccc")))
+        (is (= 0 (count-records db-spec "zzz")))))))
