@@ -17,8 +17,8 @@
   (if-not (migration-tbl-exists? db)
     (sql/db-do-commands
      db
-     (sql/create-table-ddl :clj_sql_migrations [:name "varchar(20)" "NOT NULL"])
-     "create unique index clj_sql_migrations_name_index on clj_sql_migrations (name)")))
+     [(sql/create-table-ddl :clj_sql_migrations [[:name "varchar(20)" "NOT NULL"]] )
+      "create unique index clj_sql_migrations_name_index on clj_sql_migrations (name)"])))
 
 (defn completed-migrations
   ([db] (completed-migrations db (files/get-migration-files)))
@@ -26,8 +26,8 @@
     (sql/query
      db
      ["SELECT name FROM clj_sql_migrations ORDER BY name DESC"]
-     :row-fn #(files/migration-filename
-                 (:name %) migration-files))))
+     {:row-fn #(files/migration-filename
+                (:name %) migration-files)} )))
 
 
 (defn pending-migrations

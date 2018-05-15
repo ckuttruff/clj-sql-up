@@ -1,4 +1,6 @@
 ## Releases
+### 0.4.0
+* Dependency updates, bump version
 
 ### 0.3.7
 * Allow migrations to be loaded from classpath
