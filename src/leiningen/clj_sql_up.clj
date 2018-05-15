@@ -22,8 +22,8 @@ rollback n       Rollback last n migrations (n defaults to 1)"
   ([project command & args]
      (let [opts (:clj-sql-up project)
            db   (get-database opts)
-           repos (merge {"central" "http://repo1.maven.org/maven2/"}
-                        {"clojars" "http://clojars.org/repo"}
+           repos (merge {"central" "https://repo1.maven.org/maven2/"}
+                        {"clojars" "https://clojars.org/repo"}
                         (:repos opts))]
        (pome/add-dependencies :coordinates (:deps opts)
                               :repositories repos)
