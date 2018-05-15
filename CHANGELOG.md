@@ -1,4 +1,8 @@
 ## Releases
+
+### 0.4.1
+* fix broken http links
+
 ### 0.4.0
 * Dependency updates, bump version
 
