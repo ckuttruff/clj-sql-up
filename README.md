@@ -97,6 +97,6 @@ The motivation behind clj-sql-up is to create a migration library that is as sim
     * Permit packaging of migrations with a jar/uberjar
 
 ## License
-Copyright © 2013 Christopher Kuttruff
+Copyright © 2018 Christopher Kuttruff
 
 Distributed under the [Eclipse Public License](http://www.eclipse.org/legal/epl-v10.html), the same as Clojure.
