@@ -1,5 +1,8 @@
 ## Releases
 
+### 0.4.3
+* some documentation updates
+
 ### 0.4.2
 * use [lein ancient](https://github.com/xsc/lein-ancient) to update project dependencies
 
