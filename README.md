@@ -1,6 +1,8 @@
 # clj-sql-up
 A Leiningen plugin to manage SQL database migrations simply and dynamically with clojure/jdbc.
 
+**Note:** Apologies for this repository going offline (deleted my github during the Microsoft acquisition), but this project is active and will be maintained. Thanks very much for using / supporting it!
+
 ## Features
 * Database agnostic (migrations are created from sequences of sql strings)
 * Supports creation of stored procedures / other complicated sql statements

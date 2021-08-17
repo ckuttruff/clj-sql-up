@@ -1,5 +1,8 @@
 ## Releases
 
+### 0.4.2
+* use [lein ancient](https://github.com/xsc/lein-ancient) to update project dependencies
+
 ### 0.4.1
 * fix broken http links
 
